@@ -1,6 +1,6 @@
 package com.pht.demoHibernate;
-
 import java.util.Iterator;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -8,9 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-import com.pht.demoHibernate.model.*;
-
-import antlr.collections.List;
+import model.*;
 
 public class App {
 	 private static SessionFactory factory;
@@ -23,31 +21,32 @@ public class App {
 	  }
 	  App ME = new App();
 	 
-	  // Add few employee records in database
-	  Integer empID1 = ME.addCustomer(5, "nguyen khanh", "viet nam",);
+	  // Add few customer records in database
+	  Integer cusID1 = ME.addCustomer(8, "nguyen khanh B", "USA");
+	  Integer cusID2 = ME.addCustomer(9, "nguyen khanh A", "Australia");
+	  
+	  // List down all the customer
+	  ME.listCustomer();
 	 
-	  // List down all the employees
-	  //ME.listEmployees();
-	 
-	  // Update employee's records
-	  //ME.updateEmployee(empID1, 5000);
+	  // Update customer's records
+	  ME.updateCustomer(cusID1, "Binh Dinh");
 	 
 	  // Delete an employee from the database
-	  //ME.deleteEmployee(empID2);
+	  ME.deleteCustomer(cusID2);
 	 
 	  // List down new list of the employees
-	  //ME.listEmployees();
+	  ME.listCustomer();
 	 }
 	 
 	 // Method to CREATE an employee in the database
-	 public Integer addCustomer(String id, String name, String address) {
+	 public Integer addCustomer(int id, String name, String address) {
 	  Session session = factory.openSession();
 	  Transaction tx = null;
-	  Integer employeeID = null;
+	  Integer customerID = null;
 	  try {
 	   tx = session.beginTransaction();
-	   Customer customer = new Customer(id, name, address, );
-	   employeeID = (Integer) session.save(customer);
+	   Customer customer = new Customer(id, name, address);
+	   customerID = (Integer) session.save(customer);
 	   tx.commit();
 	  } catch (HibernateException e) {
 	   if (tx != null)
@@ -56,21 +55,41 @@ public class App {
 	  } finally {
 	   session.close();
 	  }
-	  return employeeID;
+	  return customerID;
 	 }
 	 
 	 // Method to READ all the employees
-	 
+	 public void listCustomer() {
+		  Session session = factory.openSession();
+		  Transaction tx = null;
+		  try {
+		   tx = session.beginTransaction();
+		   List employees = session.createQuery("FROM Customer").list();
+		   for (Iterator iterator = employees.iterator(); iterator.hasNext();) {
+			Customer customer = (Customer) iterator.next();
+		    System.out.print("ID Customer: " + customer.getIdcustomer());
+		    System.out.print("  Name: " + customer.getName());
+		    System.out.println("  Address: " + customer.getAddress());
+		   }
+		   tx.commit();
+		  } catch (HibernateException e) {
+		   if (tx != null)
+		    tx.rollback();
+		   e.printStackTrace();
+		  } finally {
+		   session.close();
+		  }
+		 }
 	 
 	 // Method to UPDATE salary for an employee
-	 public void updateEmployee(Integer EmployeeID, int salary) {
+	 public void updateCustomer(Integer CustomerID, String address) {
 	  Session session = factory.openSession();
 	  Transaction tx = null;
 	  try {
 	   tx = session.beginTransaction();
-	   Customer employee = (Customer) session.get(Customer.class, EmployeeID);
-	   employee.getAddress();
-	   session.update(employee);
+	   Customer customer = (Customer) session.get(Customer.class, CustomerID);
+	   customer.setAddress(address);
+	   session.update(customer);
 	   tx.commit();
 	  } catch (HibernateException e) {
 	   if (tx != null)
@@ -82,12 +101,12 @@ public class App {
 	 }
 	 
 	 // Method to DELETE an employee from the records
-	 public void deleteEmployee(Integer EmployeeID) {
+	 public void deleteCustomer(Integer CustomerID) {
 	  Session session = factory.openSession();
 	  Transaction tx = null;
 	  try {
 	   tx = session.beginTransaction();
-	   Customer customer = (Customer) session.get(Customer.class, EmployeeID);
+	   Customer customer = (Customer) session.get(Customer.class, CustomerID);
 	   session.delete(customer);
 	   tx.commit();
 	  } catch (HibernateException e) {

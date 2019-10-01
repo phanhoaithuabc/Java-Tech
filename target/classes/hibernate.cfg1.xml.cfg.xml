@@ -4,12 +4,9 @@
 		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.driver_class">net.sourceforge.jtds.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:jtds:sqlserver://localhost:1433/simplehr;instance=SQLEXPRESS</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/demo</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <mapping class="model.Customer"/>
-        <mapping class="model.Orders"/>
-        <mapping class="model.Item"/>
     </session-factory>
 </hibernate-configuration>

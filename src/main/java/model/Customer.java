@@ -1,5 +1,5 @@
-package com.pht.demoHibernate.model;
-// Generated Oct 1, 2019 6:02:41 PM by Hibernate Tools 5.1.10.Final
+package model;
+// Generated Oct 2, 2019 1:58:17 AM by Hibernate Tools 5.1.10.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,11 +29,10 @@ public class Customer implements java.io.Serializable {
 		this.idcustomer = idcustomer;
 	}
 
-	public Customer(int idcustomer, String name, String address, Set<Orders> orderses) {
+	public Customer(int idcustomer, String name, String address) {
 		this.idcustomer = idcustomer;
 		this.name = name;
 		this.address = address;
-		this.orderses = orderses;
 	}
 
 	@Id
