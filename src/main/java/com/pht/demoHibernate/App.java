@@ -22,8 +22,8 @@ public class App {
 	  App ME = new App();
 	 
 	  // Add few customer records in database
-	  Integer cusID1 = ME.addCustomer(8, "nguyen khanh B", "USA");
-	  Integer cusID2 = ME.addCustomer(9, "nguyen khanh A", "Australia");
+	  Integer cusID1 = ME.addCustomer(10, "nguyen khanh B", "USA");
+	  Integer cusID2 = ME.addCustomer(11, "nguyen khanh A", "Australia");
 	  
 	  // List down all the customer
 	  ME.listCustomer();
